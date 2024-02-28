@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import * #Flask, render_template
 import mysql.connector
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password = "",
-    database = "Agenda2024"
+    database = "personas"
 )
    
 cursor =  db.cursor()
@@ -28,7 +28,7 @@ def Registro():
     Adress = request.form['User_Adress'],
     Phone = request.form['User_Adress'],
     
-    cursor.execute("Insert Into Personas (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
+    cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
     db.commit()
     
     return redirect(url_for('registrar'))
