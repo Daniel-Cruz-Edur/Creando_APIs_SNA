@@ -1,57 +1,27 @@
 <!DOCTYPE html>
 
 <html>
-    <head> <title> Aerolinea Tepito </title> <meta charset="utf-16" lang="es, en"> <link href="css/Form_Aeroline.css" type="text/css" rel="stylesheet"> </head>
+    <head> <title> Registro Usuario </title> <meta charset="utf-16" lang="es, en">  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"> </head>
     <body>
         <fieldset>
-        <form action="" method="">
+        <form action="/Registrar" method="post">
             <h1> Registro de datos </h1><br>
             <label> <h4>Por favor ingrese su nombre: </h4> </label>
-            <input type="text" name="User_Name" maxlength="16" placeholder="Por favor, registre su primer nombre aqui..." required><br>
+            <input type="text" required name="User_Name" maxlength="16" placeholder="Por favor, registre su primer nombre aqui..." required ><br>
             <label> <h4> Por favor ingrese su apellido: </h4> </label>
-            <input type="text" name="User_Lastname" maxlength="12" placeholder="Por favor, registre su primer apellido aquí..." required><br> 
+            <input type="text" required name="User_Lastname" maxlength="12" placeholder="Por favor, registre su primer apellido aquí..." required ><br> 
+            <label> <h4>Por favor ingrese su nombre de usuario: </h4> </label>
+            <input type="text" required name="User_Nickname" maxlength="16" placeholder="Por favor, registre su nombre de usuario aqui..." required><br>
+            <label> <h4> Por favor ingrese su contraseña de usuario: </h4> </label>
+            <input type="text" required name="User_Password" maxlength="16" placeholder="Por favor, registre su contraseña aquí..." required><br> 
             <label> <h4> Por favor ingrese su email: </h4> </label>
-            <input type="email" name="User_Email" placeholder="Por favor, registre su correo aquí..." required >
-            <label> <h4> Por favor, seleccione el tipo de asiento: </h4> </label>
-            <input type="radio"  name="Type_Spot" value="1"> Super Economico
-            <input type="radio" class="Persons_Hotel" name="Type_Spot" value="2"> Economico
-            <input type="radio" class="Persons_Hotel" name="Type_Spot" value="3"> VIP
-            <input type="radio" class="Persons_Hotel" name="Type_Spot" value="4"> VIP + Premium
-            <label> <h4> Por favor, seleccione el lugar de su asiento: </h4> </label>
-            <input type="radio"  name="Chair_Place" value="A"> Ventinilla
-            <input type="radio" class="Persons_Hotel" name="Chair_Place" value="B"> Mitad (Cerca a la ventanilla)
-            <input type="radio" class="Persons_Hotel" name="Chair_Place" value="C"> Mitad (Cerca al pasillo)
-            <input type="radio" class="Persons_Hotel" name="Chair_Place" value="D"> Pasillo
-            <label> <h4> Fecha de ida: </h4> </label> 
-            <input type="date" name="Date_Time_Out"><br>
-            <label> <h4> Fecha de regreso: </h4> </label> 
-            <input type="date" name="Date_Time_In"><br>
-            <label>Ingrese el E-mail del usuario: </label> <br>
-            <input type="email" name="User_Email"><br>
-            <label> <h4> Por favor, seleccione la razón de su viaje: </h4> </label>
-            <input type="radio"  name="Reason_User" value="1"> Negocios
-            <input type="radio" class="Persons_Hotel" name="Reason_User" value="2"> Vacaciones
-            <input type="radio" class="Persons_Hotel" name="Reason_User" value="3"> Motivos Familiares
-            <input type="radio" class="Persons_Hotel" name="Reason_User" value="3"> Otros
-            <label> <h4> Por favor seleccione el país de destino: </h4> </label>
-            <select name="Hotel_Place" required>
-                <option> Colombia </option>
-                <option> Venezuela </option>
-                <option> Peru </option>
-                <option> Panamá </option>
-                <option> Ecuador </option>
-                <option> Argentina </option>
-                <option> Brazil </option>
-                <option> Costa Rica </option>
-                <option> Paraguay </option>
-                <option> Bolivia </option>
-                <option> Chile </option>
-                <option> Uruguay </option>
-            </select><br>   
-            <label> Por favor, ingrese su número de visa: </label>
-            <input type="number" name="Num_Visa" min="000000001" max="99999999" step="1" value="00000001" required> <br>
+            <input type="email" required name="User_Email" placeholder="Por favor, registre su correo aquí..." required >
+            <label> <h4> Por favor, a continuación ingrese su dirección: </h4> </label>
+            <input type="text" required name="User_Adress" placeholder="Por favor, registre su dirección aquí..." required >
+            <label> <h4> Por favor, ingrese su número de telefono: </h4> </label>
+            <input type="number" min=1000000000 max="9999999999" required name="User_Phone" placeholder="Por favor, registre su telefono aquí..." required ><br>
             <button href="" id="Continue_Btn"> Continuar </button>
-            <a href="Forms_Library_Page.html"><button id="Go_Back_Btn"> Volver </button></a>
+            <a href="index.html"><button id="Go_Back_Btn"> Volver </button></a>
         </form>
         </fieldset>
     </body>

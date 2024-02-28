@@ -1,0 +1,30 @@
+html
+{
+    background-color: rgb(160, 190, 245);
+    width: fit-content;
+}
+
+fieldset
+{
+    background-color: bisque;
+    padding: 2%;
+    margin: 1%;
+    position: inherit;
+    width: fit-content;
+}
+
+form
+{
+    margin: 10px, 2%;
+    position: relative;
+    background-color: rgb(255, 255, 157);
+    text-align: center;
+    padding: 1%;
+    width: fit-content;
+}
+
+label
+{
+
+    margin: -1%, -10%;
+}
