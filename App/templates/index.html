@@ -4,13 +4,40 @@
 <head>
 		<meta charset="utf-16">
         <title> Saludo_Pestaña </title>
-        <link rel"stylesheet" href= "{{ url_for('static', filename= 'css/styles.css') }}">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/View_Table.css')}}">
 	</head>
 	
     <body>
 		<main>
             
         <h1> Taller Programación </h1>
+
+        <table> 
+        
+            <tr>   
+            <th> Codigo </th>
+            <th> Nombre </th>
+            <th> Apellido </th>
+            <th> Usuario </th>
+            <th> Email </th>
+            <th> Dirección </th>
+            <th> Telefono </th>
+            </tr>
+
+            <tbody>
+                {% for Guardado_Datos_Personas in personas %}
+                <tr>
+                <td> {{ Guardado_Datos_Personas[0] }}  </td>
+                <td> {{ Guardado_Datos_Personas[1] }}  </td>
+                <td> {{ Guardado_Datos_Personas[2] }}  </td>
+                <td> {{ Guardado_Datos_Personas[3] }}  </td>
+                <td> {{ Guardado_Datos_Personas[5] }}  </td>
+                <td> {{ Guardado_Datos_Personas[6] }}  </td>
+                <td> {{ Guardado_Datos_Personas[7] }}  </td>
+                </tr>    
+                {% endfor %}
+        </table>
+
 
         </main>
 	</body>
