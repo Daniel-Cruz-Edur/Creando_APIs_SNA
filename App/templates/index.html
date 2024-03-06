@@ -3,14 +3,14 @@
 	
 <head>
 		<meta charset="utf-16">
-        <title> Saludo_Pestaña </title>
+        <title> Personas </title>
         <link rel="stylesheet" href="{{url_for('static',filename='css/View_Table.css')}}">
 	</head>
 	
     <body>
 		<main>
             
-        <h1> Taller Programación </h1>
+        <h1> Personas Registradas </h1>
 
         <table> 
         
@@ -34,8 +34,18 @@
                 <td> {{ Guardado_Datos_Personas[5] }}  </td>
                 <td> {{ Guardado_Datos_Personas[6] }}  </td>
                 <td> {{ Guardado_Datos_Personas[7] }}  </td>
-                </tr>    
+                
+                <td>
+                    <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button>
+                    <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
+                </td>
+            
+                </tr>   
+
                 {% endfor %}
+        
+            </tbody>
+        
         </table>
 
 
