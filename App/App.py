@@ -65,18 +65,18 @@ def Editar_Usuario(id):
         Phone_Modify = request.form.get('telefonopersona')
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE persona_info set nombreper=%s,apellidoper=%s, usuarioper=%s,contraseña=%s, emailper=%s,direccionper=%s,telefonoper=%s where ID_Persona=%s"
+        Update_Data = "UPDATE persona_info set Nombre_Persona = %s, Apellido_Persona = %s, Apodo_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
         cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Nickname_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
         db.commit()
 
-        return redirect(url_for('lista'))
+        return redirect(url_for('Lista_Registros'))
     else:
         #obtener los datos de la persona que va a editar
         cursor = db.cursor()
         cursor.execute('SELECT * FROM persona_info WHERE ID_Persona = %s', (id,))
         data = cursor.fetchall()
 
-        return render_template('Editar.html', personas_info=data[0])
+        return render_template('Editar.html', personas=data[0]) #Este personas corresponde al schema
 
 @app.route('/eliminar/<int:id>', methods=['GET'])
 def Eliminar_Usuario(id):

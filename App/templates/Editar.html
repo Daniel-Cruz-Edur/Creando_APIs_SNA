@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 <body>
     <h1>Editar Personas</h1>
@@ -15,15 +15,15 @@
         <label> Apellido: </label>
         <input type="text" name="apellidopersona" value="{{ personas[2] }}"><br>
         <label>Usuario:</label>
-        <input type="text" name="usuariopersona" value="{{ personas[6] }}"disabled><br>
+        <input type="text" name="usuariopersona" value="{{ personas[3] }}"disabled><br>
         <label>Contraseña:</label>
-        <input type="password" name="contraseñapersona" value="{{ personas[7] }}"><br>
+        <input type="password" name="contraseñapersona" value="{{ personas[4] }}"><br>
         <label> Email: </label>
-        <input type="email" name="emailpersona" value="{{ personas[3] }}"><br>
+        <input type="email" name="emailpersona" value="{{ personas[5] }}"><br>
         <label> Dirección: </label>
-        <input type="text" name="direccionpersona" value="{{ personas[4] }}"><br>
+        <input type="text" name="direccionpersona" value="{{ personas[6] }}"><br>
         <label>Teléfono: </label>
-        <input type="number" name="telefonopersona" value="{{ personas[5] }}"><br>
+        <input type="number" name="telefonopersona" value="{{ personas[7] }}"><br>
         <input type="submit" value="Guardar Cambios">
     
     </form>
