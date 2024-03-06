@@ -19,7 +19,7 @@ cursor =  db.cursor()
 def Lista_Registros():
     
     cursor = db.cursor();
-    cursor.execute('SELECT * FROM personas_info');
+    cursor.execute('SELECT * FROM persona_info');
     Guardado_Datos_Personas =  cursor.fetchall();
     
     return render_template('index.html', personas = Guardado_Datos_Personas);
@@ -41,7 +41,7 @@ def Registro():
     
         #insertar datos a la tabla personas
     
-        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
+        cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!');
         
@@ -65,7 +65,7 @@ def Editar_Usuario(id):
         Phone_Modify = request.form.get('telefonopersona')
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE personas set nombreper=%s,apellidoper=%s, usuarioper=%s,contraseña=%s, emailper=%s,direccionper=%s,telefonoper=%s where ID_Persona=%s"
+        Update_Data = "UPDATE persona_info set nombreper=%s,apellidoper=%s, usuarioper=%s,contraseña=%s, emailper=%s,direccionper=%s,telefonoper=%s where ID_Persona=%s"
         cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Nickname_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
         db.commit()
 
@@ -73,7 +73,7 @@ def Editar_Usuario(id):
     else:
         #obtener los datos de la persona que va a editar
         cursor = db.cursor()
-        cursor.execute('SELECT * FROM personas WHERE ID_Persona = %s', (id,))
+        cursor.execute('SELECT * FROM persona_info WHERE ID_Persona = %s', (id,))
         data = cursor.fetchall()
 
         return render_template('Editar.html', personas_info=data[0])
