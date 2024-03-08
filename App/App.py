@@ -40,6 +40,7 @@ def Registro():
         Phone = request.form.get('User_Adress')
     
         #insertar datos a la tabla personas
+        
     
         cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
         db.commit()
@@ -78,9 +79,12 @@ def Editar_Usuario(id):
 
         return render_template('Editar.html', personas=data[0]) #Este personas corresponde al schema
 
-@app.route('/eliminar/<int:id>', methods=['GET'])
+@app.route('/Eliminar/<int:id>', methods=['GET'])
 def Eliminar_Usuario(id):
     
+    cursor = db.cursor();
+    cursor.execute('DELETE FROM persona_info WHERE ID_Persona = %s', (id,))
+    db.commit()
     return redirect(url_for('Lista_Registros'))
 
 
