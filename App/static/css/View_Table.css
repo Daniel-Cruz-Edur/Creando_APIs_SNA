@@ -1,34 +1,46 @@
-main
+html
 {
+    background-color:  rgb(171, 173, 166);
     justify-content: center;
     text-align: center;
     align-items: center;
+    overflow: scroll;
+}
+
+main
+{
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgb(199, 199, 199);
+    overflow: scroll;
 }
 
 table
 {
-    margin-left: 20%;
-    border: 2px solid;
+    width: fit-content;
     border-collapse: collapse;
-    background-color: aqua;
-    text-align: center;
-    justify-content: center;
-    width: fit content;
-}
-th, td
-{   
-    width: fit content;
-    border: 1px solid; 
-    padding: 8px;
+    overflow: scroll;
+    background-color:white;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-th
+table td, th
 {
-    font-weight: bold;
-    width: fit content;
+    width: fit-content;
+    padding: 5px;
+    border: 2px black solid;
 }
 
-h1
+main h1 
 {
-    text-align: center;
+    margin-top: auto;
+}
+
+table button
+{
+    margin: 2px;
 }

@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/Login_Page.css')}}">
 </head>
 <body>
-    <h1>Editar Personas</h1>
+    <main>
+    <fieldset>
+        <h1 style="text-align: center;">Editar Personas</h1>
     <form method="POST" action="">
-        <label> Codigo: </label>
+        <label> Codigo: 
         <input type="number" name="ID_Persona" value="{{ personas[0] }}" disabled><br>
-        <label> Nombre: </label>
+        </label>
+        <label> Nombre: 
         <input type="text" name="nombrepersona" value="{{ personas[1] }}"><br>
-        <label> Apellido: </label>
+        </label>
+        <label> Apellido: 
         <input type="text" name="apellidopersona" value="{{ personas[2] }}"><br>
-        <label>Usuario:</label>
-        <input type="text" name="usuariopersona" value="{{ personas[3] }}"disabled><br>
-        <label>Contraseña:</label>
+        </label>
+        <label>Usuario:
+        <input type="text" name="usuariopersona" value="{{ personas[3] }}" disabled><br>
+        </label>
+        <label>Contraseña:
         <input type="password" name="contraseñapersona" value="{{ personas[4] }}"><br>
-        <label> Email: </label>
+        </label>
+        <label> Email:
         <input type="email" name="emailpersona" value="{{ personas[5] }}"><br>
-        <label> Dirección: </label>
+        </label>
+        <label> Dirección: 
         <input type="text" name="direccionpersona" value="{{ personas[6] }}"><br>
-        <label>Teléfono: </label>
-        <input type="number" name="telefonopersona" value="{{ personas[7] }}"><br>
+        </label>
+        <label>Teléfono: 
+        <input type="text" name="telefonopersona" value="{{ personas[7] }}"><br>
+        </label>
         <input type="submit" value="Guardar Cambios">
-    
     </form>
-    
+    </fieldset>
+    </main>
 
 </body>
 </html>

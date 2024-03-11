@@ -88,15 +88,14 @@ def Editar_Usuario(id):
     if request.method == 'POST':
         Nombres_Modify = request.form.get('nombrepersona')
         Apellidos_Modify = request.form.get('apellidopersona')
-        Nickname_Modify = request.form.get('usuariopersona')
         Password_Modify = request.form.get('contraseñapersona')
         Email_Modify = request.form.get('emailpersona')
         Adress_Modify = request.form.get('direccionpersona')
         Phone_Modify = request.form.get('telefonopersona')
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE persona_info set Nombre_Persona = %s, Apellido_Persona = %s, Apodo_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
-        cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Nickname_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
+        Update_Data = "UPDATE persona_info set Nombre_Persona = %s, Apellido_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
+        cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
         db.commit()
 
         return redirect(url_for('Lista_Registros'))
@@ -106,7 +105,7 @@ def Editar_Usuario(id):
         cursor.execute('SELECT * FROM persona_info WHERE ID_Persona = %s', (id,))
         data = cursor.fetchall()
 
-        return render_template('Editar.html', personas=data[0]) #Este personas corresponde al schema
+        return render_template('Editar.html', personas = data[0]) #Este personas corresponde al schema
 
 @app.route('/Eliminar/<int:id>', methods=['GET'])
 def Eliminar_Usuario(id):

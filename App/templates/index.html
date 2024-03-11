@@ -1,54 +1,48 @@
 <!DOCTYPE html>
-<html>
-	
+<html>	
 <head>
-		<meta charset="utf-16">
-        <title> Personas </title>
-        <link rel="stylesheet" href="{{url_for('static',filename='css/View_Table.css')}}">
-	</head>
-	
-    <body>
-		<main>
+	<meta charset="utf-16">
+    <title> Personas </title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/View_Table.css')}}">
+</head>
+<body>
+	<main>
             
-        <h1> Personas Registradas </h1>
+    <h1> Personas Registradas </h1>
 
-        <table> 
+    <table> 
         
-            <tr>   
-            <th> Codigo </th>
-            <th> Nombre </th>
-            <th> Apellido </th>
-            <th> Usuario </th>
-            <th> Email </th>
-            <th> Dirección </th>
-            <th> Telefono </th>
-            </tr>
+        <tr>   
+        <th> Código </th>
+        <th> Nombre </th>
+        <th> Apellido </th>
+        <th> Usuario </th>
+        <th> Email </th>
+        <th> Dirección </th>
+        <th> Teléfono </th>
+        <th> Opciones </th>
+        </tr>
 
-            <tbody>
-                {% for Guardado_Datos_Personas in personas %}
-                <tr>
-                <td> {{ Guardado_Datos_Personas[0] }}  </td>
-                <td> {{ Guardado_Datos_Personas[1] }}  </td>
-                <td> {{ Guardado_Datos_Personas[2] }}  </td>
-                <td> {{ Guardado_Datos_Personas[3] }}  </td>
-                <td> {{ Guardado_Datos_Personas[5] }}  </td>
-                <td> {{ Guardado_Datos_Personas[6] }}  </td>
-                <td> {{ Guardado_Datos_Personas[7] }}  </td>
+        <tbody>
+            {% for Guardado_Datos_Personas in personas %}
+            <tr>
+            <td> {{ Guardado_Datos_Personas[0] }}  </td>
+            <td> {{ Guardado_Datos_Personas[1] }}  </td>
+            <td> {{ Guardado_Datos_Personas[2] }}  </td>
+            <td> {{ Guardado_Datos_Personas[3] }}  </td>
+            <td> {{ Guardado_Datos_Personas[5] }}  </td>
+            <td> {{ Guardado_Datos_Personas[6] }}  </td>
+            <td> {{ Guardado_Datos_Personas[7] }}  </td>
                 
-                <td>
-                    <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button>
-                    <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
-                </td>
-            
-                </tr>   
-
-                {% endfor %}
+            <td> <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button> 
+                 <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
+            </td>
+            </tr>   
+            {% endfor %}
+        </tbody>
         
-            </tbody>
-        
-        </table>
+    </table>
 
-
-        </main>
-	</body>
+    </main>
+</body>
 </html>
