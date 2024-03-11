@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request, url_for,flash
+from flask import Flask, render_template, redirect, request, url_for,flash, session
 import mysql.connector
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'Dani_Server';
@@ -12,6 +13,33 @@ db = mysql.connector.connect(
 )
    
 cursor =  db.cursor()
+
+def Encriptacion_Password(Encript_Password):
+    
+    #Generamos un has de la contraseña
+    Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
+    return Encriptar;
+    
+@app.route('/Login', methods=['GET', 'POST'])
+def Login_User():
+    
+    if request.method == 'POST':
+        
+        #Verificar las credenciales del usuario
+        Username = request.form.get(); #'User's_Login'
+        Password = request.form.get(); #'User's_Password'
+        
+        cursor = db.cursor();
+        cursor.execute('SELECT Apodo_Persona FROM personas_info Where Apodo_Persona = %s', (Username,))
+        Users = cursor.fetchone();
+        
+        if Users and bcrypt.check_hash(Users[4], Password):
+            session['Users'] = Username;
+            return redirect(url_for('Lista_Registros'))
+ 
+        else:
+            Error =  'Credenciales invalidas. Intentelo nuevamente. ';      
+            return render_template('Login.html', Error);
 
 
 #Definir rutas
@@ -38,11 +66,12 @@ def Registro():
         E_Mail = request.form.get('User_Email')
         Adress = request.form.get('User_Adress')
         Phone = request.form.get('User_Adress')
-    
-        #insertar datos a la tabla personas
+
+        Password_Now_Encripted = Encriptacion_Password(Password)
         
+        #insertar datos a la tabla personas
     
-        cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password, E_Mail, Adress, Phone))
+        cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!');
         
@@ -86,7 +115,6 @@ def Eliminar_Usuario(id):
     cursor.execute('DELETE FROM persona_info WHERE ID_Persona = %s', (id,))
     db.commit()
     return redirect(url_for('Lista_Registros'))
-
 
 
 #Aqui ejecutamos la app

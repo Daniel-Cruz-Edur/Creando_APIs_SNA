@@ -17,7 +17,7 @@ html main fieldset
     margin-right: auto;
     width: fit-content;
     background-color: rgb(255, 215, 155);
-    border: 0px;
+    border-color: rgba(255, 255, 255, 0);
     border-radius: 10%;
 }
 html fieldset form
@@ -30,18 +30,32 @@ html fieldset form
     border-radius: 10%;
 }
 
-html fieldset form label
+html fieldset form label input
 {
-margin-top: 20px;
+margin-top: 5px;
+margin-bottom: 5px;
 }
 
 
 html fieldset form h1
 {
-    width: fit-content;
+    text-align: center;
 }
 
 html fieldset form #Button_Submit
+{
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+input
+{
+    width: fit-content;
+}
+
+button
 {
     margin: 10px;
     text-align: center;

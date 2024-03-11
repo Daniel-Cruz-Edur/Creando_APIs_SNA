@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 
 <html>
-    <head> <title> Registro Usuario </title> <meta charset="utf-16" lang="es, en">  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"> </head>
+    <head> 
+
+        <title> Registro Usuario </title> <meta charset="utf-16" lang="es, en">  
+        <link rel="stylesheet" href="{{url_for('static',filename='css/Login_Page.css')}}"> 
+    
+    </head>
+    
     <body>
+        <main>
         <fieldset>
         <form action="/Registrar" method="post">
             <h1> Registro de datos </h1><br>
@@ -24,5 +31,6 @@
             <a href="index.html"><button id="Go_Back_Btn"> Volver </button></a>
         </form>
         </fieldset>
+    </main>
     </body>
 </html>
