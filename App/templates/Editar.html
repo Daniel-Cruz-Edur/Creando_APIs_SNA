@@ -14,25 +14,25 @@
         <input type="number" name="ID_Persona" value="{{ personas[0] }}" disabled><br>
         </label>
         <label> Nombre: 
-        <input type="text" name="nombrepersona" value="{{ personas[1] }}"><br>
+        <input type="text" name="nombrepersona" value="{{ personas[1] }}" required><br>
         </label>
         <label> Apellido: 
-        <input type="text" name="apellidopersona" value="{{ personas[2] }}"><br>
+        <input type="text" name="apellidopersona" value="{{ personas[2] }}" required><br>
         </label>
         <label>Usuario:
         <input type="text" name="usuariopersona" value="{{ personas[3] }}" disabled><br>
         </label>
         <label>Contraseña:
-        <input type="password" name="contraseñapersona" value="{{ personas[4] }}"><br>
+        <input type="password" name="contraseñapersona" value="{{ personas[4] }}" required><br>
         </label>
         <label> Email:
-        <input type="email" name="emailpersona" value="{{ personas[5] }}"><br>
+        <input type="email" name="emailpersona" value="{{ personas[5] }}" required><br>
         </label>
         <label> Dirección: 
-        <input type="text" name="direccionpersona" value="{{ personas[6] }}"><br>
+        <input type="text" name="direccionpersona" value="{{ personas[6] }}" required><br>
         </label>
         <label>Teléfono: 
-        <input type="text" name="telefonopersona" value="{{ personas[7] }}"><br>
+        <input type="number" min=1000000000 max="9999999999" name="telefonopersona" value="{{ personas[7] }}" required><br>
         </label>
         <input type="submit" value="Guardar Cambios">
     </form>

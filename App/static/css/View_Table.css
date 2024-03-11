@@ -38,6 +38,7 @@ table td, th
 main h1 
 {
     margin-top: auto;
+    text-overflow: clip;
 }
 
 table button

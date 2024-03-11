@@ -41,6 +41,7 @@ def Login_User():
             Error = 'Credenciales invalidas. Intentelo nuevamente. ';      
             return render_template('Login.html', Error);
 
+    return render_template('Login.html')
 
 #Definir rutas
 @app.route('/')
@@ -65,7 +66,7 @@ def Registro():
         Password = request.form.get('User_Password')
         E_Mail = request.form.get('User_Email')
         Adress = request.form.get('User_Adress')
-        Phone = request.form.get('User_Adress')
+        Phone = request.form.get('User_Phone')
 
         Password_Now_Encripted = Encriptacion_Password(Password)
         
