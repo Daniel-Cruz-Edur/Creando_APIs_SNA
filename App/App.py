@@ -26,19 +26,19 @@ def Login_User():
     if request.method == 'POST':
         
         #Verificar las credenciales del usuario
-        Username = request.form.get(); #'User's_Login'
-        Password = request.form.get(); #'User's_Password'
+        Username = request.form.get('Users_Login'); #'User's_Login'
+        Password = request.form.get('Users_Password'); #'User's_Password'
         
         cursor = db.cursor();
-        cursor.execute('SELECT Apodo_Persona FROM personas_info Where Apodo_Persona = %s', (Username,))
+        cursor.execute('SELECT Apodo_Persona, Password_Persona FROM personas_info Where Apodo_Persona = %s', (Username,))
         Users = cursor.fetchone();
         
         if Users and bcrypt.check_hash(Users[4], Password):
-            session['Users'] = Username;
+            session['User'] = Username;
             return redirect(url_for('Lista_Registros'))
  
         else:
-            Error =  'Credenciales invalidas. Intentelo nuevamente. ';      
+            Error = 'Credenciales invalidas. Intentelo nuevamente. ';      
             return render_template('Login.html', Error);
 
 
