@@ -1,0 +1,50 @@
+html
+{
+    background-color: rgb(252, 216, 171);
+}
+main
+{
+    padding: 10px;
+    display: block;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+html main fieldset
+{
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    background-color: rgb(255, 215, 155);
+    border: 0px;
+    border-radius: 10%;
+}
+html fieldset form
+{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background-color: antiquewhite;
+    border-radius: 10%;
+}
+
+html fieldset form label
+{
+margin-top: 20px;
+}
+
+
+html fieldset form h1
+{
+    width: fit-content;
+}
+
+html fieldset form #Button_Submit
+{
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
