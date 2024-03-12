@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, url_for,flash, session
 import mysql.connector
-import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
+#import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'Dani_Server';
@@ -14,11 +15,14 @@ db = mysql.connector.connect(
    
 cursor =  db.cursor()
 
+@app.route('/Password/<Encript_Password>')
 def Encriptacion_Password(Encript_Password):
     
     #Generamos un has de la contraseña
-    Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
-    return Encriptar;
+    #Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
+    Encriptar = generate_password_hash(Encript_Password)
+    Value_Check = check_password_hash(Encriptar, Encript_Password)
+    return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
     
 @app.route('/Login', methods=['GET', 'POST'])
 def Login_User():
@@ -30,15 +34,15 @@ def Login_User():
         Password = request.form.get('Users_Password'); #'User's_Password'
         
         cursor = db.cursor();
-        cursor.execute('SELECT Apodo_Persona, Password_Persona FROM personas_info Where Apodo_Persona = %s', (Username,))
+        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM persona_info Where Apodo_Persona = %s", (Username,))
         Users = cursor.fetchone();
         
-        if Users and bcrypt.check_hash(Users[4], Password):
+        if Users or Encriptacion_Password(Password) == Users[1]:
             session['User'] = Username;
             return redirect(url_for('Lista_Registros'))
  
         else:
-            Error = 'Credenciales invalidas. Intentelo nuevamente. ';      
+            Error = 'Credenciales invalidas. Intentelo nuevamente.';      
             return render_template('Login.html', Error);
 
     return render_template('Login.html')
@@ -74,7 +78,7 @@ def Registro():
     
         cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
         db.commit()
-        flash('Usuario creado correctamente.', 'Sucess!');
+        flash('Usuario creado correctamente.', 'Sucess!')
         
         
         #redirigimos a la misma pagina cuando el metodo es POST
