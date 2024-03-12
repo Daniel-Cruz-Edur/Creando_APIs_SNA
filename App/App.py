@@ -37,13 +37,13 @@ def Login_User():
         cursor.execute("SELECT Apodo_Persona, Password_Persona FROM persona_info Where Apodo_Persona = %s", (Username,))
         Users = cursor.fetchone();
         
-        if Users or Encriptacion_Password(Password) == Users[1]:
+        if Users and check_password_hash(Users[1], Password):
             session['User'] = Username;
             return redirect(url_for('Lista_Registros'))
  
         else:
             Error = 'Credenciales invalidas. Intentelo nuevamente.';      
-            return render_template('Login.html', Error);
+            return render_template('Login.html', Error=Error);
 
     return render_template('Login.html')
 
