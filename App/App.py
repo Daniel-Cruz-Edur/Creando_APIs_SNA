@@ -22,7 +22,8 @@ def Encriptacion_Password(Encript_Password):
     #Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
     Encriptar = generate_password_hash(Encript_Password)
     Value_Check = check_password_hash(Encriptar, Encript_Password)
-    return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
+    #return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
+    return Value_Check;
     
 @app.route('/Login', methods=['GET', 'POST'])
 def Login_User():
@@ -30,22 +31,39 @@ def Login_User():
     if request.method == 'POST':
         
         #Verificar las credenciales del usuario
-        Username = request.form.get('Users_Login'); #'User's_Login'
-        Password = request.form.get('Users_Password'); #'User's_Password'
+        Username_Login = request.form.get('Users_Login'); #'User's_Login'
+        Password_Login = request.form.get('Users_Password'); #'User's_Password'
         
         cursor = db.cursor();
-        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM persona_info Where Apodo_Persona = %s", (Username,))
+        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM persona_info Where Apodo_Persona = %s", (Username_Login,))
         Users = cursor.fetchone();
         
-        if Users and check_password_hash(Users[1], Password):
-            session['User'] = Username;
-            return redirect(url_for('Lista_Registros'))
- 
+        print(Users)
+        Validation = check_password_hash(Users[1], Password_Login)
+        print (Validation)
+        
+        if Users is not None:
+            Username_Login = Users[0]
+            Password_Login = Users[1]
+            if check_password_hash(Users[1], Password_Login):
+                session['User'] = Username_Login
+                return redirect(url_for('Lista_Registros'))
+            else:
+                print('Credenciales inválidas. Inténtelo nuevamente.')
+                return render_template('Login.html', error='Credenciales inválidas. Inténtelo nuevamente.')
         else:
-            Error = 'Credenciales invalidas. Intentelo nuevamente.';      
-            return render_template('Login.html', Error=Error);
+            print('Usuario no encontrado--. Inténtelo nuevamente.')
+            return render_template('Login.html', error='Usuario no encontrado. Inténtelo nuevamente.')
 
     return render_template('Login.html')
+
+@app.route('/Logout')
+def Logout():
+    
+    session.pop('User', None)
+    
+    print("Sesión eliminada")
+    return redirect/url_for(('Login_User'))
 
 #Definir rutas
 @app.route('/')
@@ -70,11 +88,16 @@ def Registro():
         Password = request.form.get('User_Password')
         E_Mail = request.form.get('User_Email')
         Adress = request.form.get('User_Adress')
-        Phone = request.form.get('User_Phone')
+        Phone = request.form.get('User_Phon -e')
 
-        Password_Now_Encripted = Encriptacion_Password(Password)
+        Password_Now_Encripted = generate_password_hash(Password)
         
+        print (Password)
+        print (Password_Now_Encripted)
         #insertar datos a la tabla personas
+
+        cursor = db.cursor()
+        cursor.execute("Select Apodo_Persona, Email_Persona FROM persona_info Where Apodo_Persona = %s,  Email_Persona = %s", (Nickname, E_Mail))
     
         cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
         db.commit()
