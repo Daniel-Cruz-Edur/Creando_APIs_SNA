@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en, es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/Login_Page.css'">
+    <title> Registro de canciones </title>
+</head>
+
+<body>
+<main>
+    <article>
+        <h1> Registro de canciones </h1>
+        <fieldset>
+        <form>
+
+            <label> Titulo de la canción
+                <input type="text" name="Songs_Title" placeholder="Ingrese el titulo de la canción aquí... " required >
+            </label>
+
+            <label> Artista de la Canción
+                <input type="text" name="Artist_Song" placeholder="Ingrese el nombre del artista... " required >
+            </label>
+
+            <label> Genero de la canción
+                <input type="text" name="Gender_Song" placeholder="Ingrese genero principal de la canción... " required >  
+            </label>
+
+            <label> Precio de la canción
+                <input type="number" step="any" name="Price_Song" placeholder="Ingrese el precio de la canción..." requiered >
+            </label>
+
+            <label> Duración de la canción
+                <input type="time" name="Duration_Song" placeholder="Ingrese la duración de la canción..." required >
+            </label>
+
+            <label> Fecha de lanzamiento
+                <input type="date" name="Relase_Song" placeholder="Ingrese la fecha de lanzamiento de la canción..." required >
+            </label>
+
+            <label> Portada de la canción
+                <p>Ingrese aqui un archivo de tamaño 400x400 px tipo </p>
+                <input type="file" name="Cover_Song" required >
+            </label>
+
+        </form>
+        </fieldset>    
+    </article>
+</main>    
+</body>
+
+</html>

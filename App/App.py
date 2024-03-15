@@ -10,7 +10,7 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password = "",
-    database = "personas"
+    database = "usuarios"
 )
    
 cursor =  db.cursor()
@@ -35,7 +35,7 @@ def Login_User():
         Password_Login = request.form.get('Users_Password'); #'User's_Password'
         
         cursor = db.cursor();
-        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM persona_info Where Apodo_Persona = %s", (Username_Login,))
+        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM personas_info Where Apodo_Persona = %s", (Username_Login,))
         Users = cursor.fetchone();
         
         print(Users)
@@ -70,10 +70,10 @@ def Logout():
 def Lista_Registros():
     
     cursor = db.cursor();
-    cursor.execute('SELECT * FROM persona_info');
+    cursor.execute('SELECT * FROM personas_info');
     Guardado_Datos_Personas =  cursor.fetchall();
     
-    return render_template('index.html', personas = Guardado_Datos_Personas);
+    return render_template('index.html', Mi_Base_De_Datos = Guardado_Datos_Personas);
 
 
 
@@ -88,18 +88,13 @@ def Registro():
         Password = request.form.get('User_Password')
         E_Mail = request.form.get('User_Email')
         Adress = request.form.get('User_Adress')
-        Phone = request.form.get('User_Phon -e')
+        Phone = request.form.get('User_Phone')
 
         Password_Now_Encripted = generate_password_hash(Password)
         
-        print (Password)
-        print (Password_Now_Encripted)
         #insertar datos a la tabla personas
 
-        cursor = db.cursor()
-        cursor.execute("Select Apodo_Persona, Email_Persona FROM persona_info Where Apodo_Persona = %s,  Email_Persona = %s", (Nickname, E_Mail))
-    
-        cursor.execute("Insert Into persona_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
+        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!')
         
@@ -122,7 +117,7 @@ def Editar_Usuario(id):
         Phone_Modify = request.form.get('telefonopersona')
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE persona_info set Nombre_Persona = %s, Apellido_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
+        Update_Data = "UPDATE personas_info set Nombre_Persona = %s, Apellido_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
         cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
         db.commit()
 
@@ -130,7 +125,7 @@ def Editar_Usuario(id):
     else:
         #obtener los datos de la persona que va a editar
         cursor = db.cursor()
-        cursor.execute('SELECT * FROM persona_info WHERE ID_Persona = %s', (id,))
+        cursor.execute('SELECT * FROM personas_info WHERE ID_Persona = %s', (id,))
         data = cursor.fetchall()
 
         return render_template('Editar.html', personas = data[0]) #Este personas corresponde al schema
@@ -139,9 +134,20 @@ def Editar_Usuario(id):
 def Eliminar_Usuario(id):
     
     cursor = db.cursor();
-    cursor.execute('DELETE FROM persona_info WHERE ID_Persona = %s', (id,))
+    cursor.execute('DELETE FROM personas_info WHERE ID_Persona = %s', (id,))
     db.commit()
     return redirect(url_for('Lista_Registros'))
+
+# Desde quí realizo las rutos pertinentes para las conciones
+# 1) Registro
+# 2) Actualización
+# 3) Eliminación
+# 4) Lista
+
+@app.route('/Registro_Canciones')
+def Registar_Canciones():
+    print("UWU")
+
 
 
 #Aqui ejecutamos la app
