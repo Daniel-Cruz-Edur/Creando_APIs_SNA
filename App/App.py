@@ -144,11 +144,33 @@ def Eliminar_Usuario(id):
 # 3) Eliminación
 # 4) Lista
 
-@app.route('/Registro_Canciones')
-def Registar_Canciones():
-    print("UWU")
-
-
+@app.route('/Registro_De_Canciones')
+def Registrando_Las_Canciones():
+    
+    if request.method == 'POST':
+    
+        Song_Title = request.form.get('Songs_Title');
+        Artist_Name = request.form.get('Artist_Song');
+        Song_Gender = request.form.get('Gender_Song');
+        Song_Price = request.form.get('Price_Song');
+        Song_Duration = request.form.get('Duration_Song');
+        Date_Relase = request.form.get('Relase_Song');
+        Song_Cover = request.form.get('Cover_Song');
+        
+        #insertar datos a la tabla personas
+        cursor.execute("Insert Into songs (Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song) Values (%s, %s, %s, %s, %s, %s, %s)", (Song_Title, Artist_Name, Song_Gender, Song_Price, Song_Duration, Date_Relase, Song_Cover));
+        db.commit();
+        flash('Cancion guardada correctamente.', 'Sucess!');
+        
+        print("Metodo POST")
+        
+        #redirigimos a la misma pagina cuando el metodo es POST
+        return redirect(url_for('Registrando_Las_Canciones'));
+    
+    print("Hola acá esta creando la ruta de registro de canciones");
+    
+    #Con get lo envio al doc
+    return render_template('Log_Songs_Page.html');
 
 #Aqui ejecutamos la app
 if __name__ == '__main__':

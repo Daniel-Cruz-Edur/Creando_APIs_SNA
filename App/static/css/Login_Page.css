@@ -30,12 +30,19 @@ html fieldset form
     border-radius: 10%;
 }
 
-html fieldset form label input
+html fieldset form label
 {
-margin-top: 5px;
-margin-bottom: 5px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
+html fieldset form label input
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 html fieldset form h1
 {
@@ -61,4 +68,27 @@ button
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#H1_Registro_Song
+{
+    text-align: center;
+}
+
+#Label_Cover input
+{
+    margin-top: -2px;
+    margin-bottom: 1px;
+    font-size: 1.3ch;
+}
+
+#Label_Cover p
+{
+    margin: 0px;
+    font-size: 1cap;
+}
+
+#Portada_Song
+{
+    padding: 5px;
 }

@@ -7,7 +7,7 @@
 </head>
 <body>
 	<main>
-     
+    
     <h1> Bienvenido  {{ session['usuario'] }} </h1>
     <p> Has iniciado sesion correctamente </p>
     <h1> Personas Registradas </h1>
@@ -37,7 +37,7 @@
             <td> {{ Guardado_Datos_Personas[7] }}  </td>
                 
             <td> <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button> 
-                 <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
+                <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
             </td>
             </tr>   
             {% endfor %}
