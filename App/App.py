@@ -5,65 +5,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'Dani_Server';
-   
+
 db = mysql.connector.connect(
     host="localhost",
     user="root",
     password = "",
     database = "usuarios"
 )
-   
+
 cursor =  db.cursor()
-
-@app.route('/Password/<Encript_Password>')
-def Encriptacion_Password(Encript_Password):
-    
-    #Generamos un has de la contraseña
-    #Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
-    Encriptar = generate_password_hash(Encript_Password)
-    Value_Check = check_password_hash(Encriptar, Encript_Password)
-    #return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
-    return Value_Check;
-    
-@app.route('/Login', methods=['GET', 'POST'])
-def Login_User():
-    
-    if request.method == 'POST':
-        
-        #Verificar las credenciales del usuario
-        Username_Login = request.form.get('Users_Login'); #'User's_Login'
-        Password_Login = request.form.get('Users_Password'); #'User's_Password'
-        
-        cursor = db.cursor();
-        cursor.execute("SELECT Apodo_Persona, Password_Persona FROM personas_info Where Apodo_Persona = %s", (Username_Login,))
-        Users = cursor.fetchone();
-        
-        print(Users)
-        Validation = check_password_hash(Users[1], Password_Login)
-        print (Validation)
-        
-        if Users is not None:
-            Username_Login = Users[0]
-            Password_Login = Users[1]
-            if check_password_hash(Users[1], Password_Login):
-                session['User'] = Username_Login
-                return redirect(url_for('Lista_Registros'))
-            else:
-                print('Credenciales inválidas. Inténtelo nuevamente.')
-                return render_template('Login.html', error='Credenciales inválidas. Inténtelo nuevamente.')
-        else:
-            print('Usuario no encontrado--. Inténtelo nuevamente.')
-            return render_template('Login.html', error='Usuario no encontrado. Inténtelo nuevamente.')
-
-    return render_template('Login.html')
-
-@app.route('/Logout')
-def Logout():
-    
-    session.pop('User', None)
-    
-    print("Sesión eliminada")
-    return redirect/url_for(('Login_User'))
 
 #Definir rutas
 @app.route('/')
@@ -71,12 +21,10 @@ def Lista_Registros():
     
     cursor = db.cursor();
     cursor.execute('SELECT * FROM personas_info');
-    Guardado_Datos_Personas =  cursor.fetchall();
+    Guardado_Datos_Personas = cursor.fetchall();
     
     return render_template('index.html', Mi_Base_De_Datos = Guardado_Datos_Personas);
-
-
-
+    
 @app.route('/Registrar', methods=['GET','POST']) #lo del parantesis (sin las comillas) poner en la barra de busqueda
 def Registro():
     
@@ -89,12 +37,13 @@ def Registro():
         E_Mail = request.form.get('User_Email')
         Adress = request.form.get('User_Adress')
         Phone = request.form.get('User_Phone')
-
+        User_Rol = request.form.get('User_Rol')
+        
         Password_Now_Encripted = generate_password_hash(Password)
         
         #insertar datos a la tabla personas
 
-        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone))
+        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona, Rol_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone, User_Rol))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!')
         
@@ -104,6 +53,18 @@ def Registro():
     
     #Con get lo envio al doc
     return render_template('registrar.html')
+
+@app.route('/Password/<Encript_Password>')
+def Encriptacion_Password(Encript_Password):
+    
+    #Generamos un has de la contraseña
+    #Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
+    
+    Encriptar = generate_password_hash(Encript_Password)
+    Value_Check = check_password_hash(Encriptar, Encript_Password)
+    
+    #return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
+    return Value_Check;
 
 @app.route('/Editar/<int:id>', methods = ['GET','POST'])
 def Editar_Usuario(id):
@@ -115,10 +76,11 @@ def Editar_Usuario(id):
         Email_Modify = request.form.get('emailpersona')
         Adress_Modify = request.form.get('direccionpersona')
         Phone_Modify = request.form.get('telefonopersona')
+        User_Rol_Modify = request.form.get('User_Rol_Edit')
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE personas_info set Nombre_Persona = %s, Apellido_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s Where ID_Persona = %s"
-        cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, id))
+        Update_Data = "UPDATE personas_info set Nombre_Persona = %s, Apellido_Persona = %s, Password_Persona = %s, Email_Persona = %s, Adress_Persona = %s, Phone_Persona = %s, Rol_Persona = %s Where ID_Persona = %s"
+        cursor.execute(Update_Data,(Nombres_Modify, Apellidos_Modify, Password_Modify, Email_Modify, Adress_Modify, Phone_Modify, User_Rol_Modify,id))
         db.commit()
 
         return redirect(url_for('Lista_Registros'))
@@ -138,6 +100,50 @@ def Eliminar_Usuario(id):
     db.commit()
     return redirect(url_for('Lista_Registros'))
 
+    
+@app.route('/Login', methods=['GET', 'POST'])
+def Login_User():
+    
+    if request.method == 'POST':
+        
+        #Verificar las credenciales del usuario
+        Username_Login = request.form.get('Users_Login'); #'User's_Login'
+        Password_Login = request.form.get('Users_Password'); #'User's_Password'
+        
+        cursor = db.cursor();
+        SQL = "SELECT Apodo_Persona, Password_Persona, Rol_Persona FROM personas_info Where Apodo_Persona = %s";
+        cursor.execute(SQL, (Username_Login))
+        Users = cursor.fetchone();
+        
+        if Users and check_password_hash(Users['Password_Persona'], Password_Login):
+
+            session['User'] = Users['Apodo_Persona'];
+            session['Type_User'] = Users['Rol_Persona'];
+            
+            if Users['Type_User'] == 'Administrador':
+                
+                return redirect(url_for('Lista_Registros'));
+            
+            else:
+                
+                return redirect(url_for('Lista_De_Canciones'));
+        
+        else:
+            
+            print("Las credenciales, ingresadas son invalidas. ");
+            Error = 'Credenciales invalidas. Intentelo nuevamente. ';
+            return render_template ('Login.html', Error = Error);
+            
+    return render_template('Login.html')
+
+@app.route('/Logout')
+def Logout():
+    
+    session.pop('User', None)
+    
+    print("Sesión eliminada")
+    return redirect/url_for(('Login_User'))
+
 # Desde quí realizo las rutos pertinentes para las conciones
 # 1) Registro
 # 2) Actualización
@@ -147,8 +153,10 @@ def Eliminar_Usuario(id):
 @app.route('/Registro_De_Canciones')
 def Registrando_Las_Canciones():
     
-    if request.method == 'POST':
+    if request.method == 'Get':
     
+        print("Hola acá esta creando la ruta de registro de canciones");
+        
         Song_Title = request.form.get('Songs_Title');
         Artist_Name = request.form.get('Artist_Song');
         Song_Gender = request.form.get('Gender_Song');
@@ -167,12 +175,22 @@ def Registrando_Las_Canciones():
         #redirigimos a la misma pagina cuando el metodo es POST
         return redirect(url_for('Registrando_Las_Canciones'));
     
-    print("Hola acá esta creando la ruta de registro de canciones");
-    
     #Con get lo envio al doc
     return render_template('Log_Songs_Page.html');
 
+@app.route('/Lista_De_Canciones')
+def Listando_Las_Canciones():
+
+    cursor = db.cursor();
+    cursor.execute("SELECT * FROM songs");
+    Guardado_Datos_Songs = cursor.fetchall();
+    print("Listando las canciones. ");
+    
+    return render_template('Songs_List.html', Lista_De_Canciones = Guardado_Datos_Songs);
+    
+    
 #Aqui ejecutamos la app
 if __name__ == '__main__':
     app.add_url_rule('/',view_func=Lista_Registros)
     app.run(debug=True, port=5005)
+    

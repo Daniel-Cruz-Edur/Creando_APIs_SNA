@@ -13,20 +13,42 @@
         <fieldset>
         <form action="/Registrar" method="post">
             <h1> Registro de datos </h1><br>
-            <label> <h4>Por favor ingrese su nombre: </h4> </label>
+            
+            <label> <h4> Ingrese su nombre: </h4> 
             <input type="text" required name="User_Name" maxlength="16" placeholder="Por favor, registre su primer nombre aqui..." required ><br>
-            <label> <h4> Por favor ingrese su apellido: </h4> </label>
+            </label>
+
+            <label> <h4> Ingrese su apellido: </h4> 
             <input type="text" required name="User_Lastname" maxlength="12" placeholder="Por favor, registre su primer apellido aquí..." required ><br> 
-            <label> <h4>Por favor ingrese su nombre de usuario: </h4> </label>
+            </label>    
+
+            <label> <h4> Nombre de usuario: </h4> 
             <input type="text" required name="User_Nickname" maxlength="16" placeholder="Por favor, registre su nombre de usuario aqui..." required><br>
-            <label> <h4> Por favor ingrese su contraseña de usuario: </h4> </label>
+            </label>
+
+            <label> <h4> Contraseña de usuario: </h4> 
             <input type="password" required name="User_Password" maxlength="16" placeholder="Por favor, registre su contraseña aquí..." required><br> 
-            <label> <h4> Por favor ingrese su email: </h4> </label>
+            </label>
+
+            <label> <h4> Ingrese su email: </h4> 
             <input type="email" required name="User_Email" placeholder="Por favor, registre su correo aquí..." required >
-            <label> <h4> Por favor, a continuación ingrese su dirección: </h4> </label>
+            </label>
+
+            <label> <h4> Ingrese su dirección: </h4> 
             <input type="text" required name="User_Adress" placeholder="Por favor, registre su dirección aquí..." required >
-            <label> <h4> Por favor, ingrese su número de telefono: </h4> </label>
+            </label>
+
+            <label> <h4> Ingrese su número de telefono: </h4> 
             <input type="number" min=1000000000 max="9999999999" required name="User_Phone" placeholder="Por favor, registre su telefono aquí..." required ><br>
+            </label>
+
+            <label> <h4> Ingrese el rol del usuario: </h4>
+            <select name="User_Rol" id="">
+                <option value="Administrador"> Administrador </option>
+                <option value="Comprador"> Comprador </option>
+            </select>
+            </label>
+            
             <button href="" id="Continue_Btn"> Continuar </button>
             <a href="index.html"><button id="Go_Back_Btn"> Volver </button></a>
         </form>

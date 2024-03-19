@@ -13,7 +13,7 @@
     <article>
         <h1 id="H1_Registro_Song"> Registro de canciones </h1>
         <fieldset>
-        <form>
+        <form action="/Registro_De_Canciones" method="POST">
             
             <label> Titulo de la canción:
                 <input type="text" name="Songs_Title" placeholder="Ingrese el titulo de la canción aquí... " required >
@@ -31,8 +31,8 @@
                 <input type="number" step="any" name="Price_Song" placeholder="Ingrese el precio de la canción..." requiered >
             </label>
 
-            <label> Duración de la canción
-                <input type="time" name="Duration_Song" placeholder="Ingrese la duración de la canción..." required >
+            <label> Duración de la canción:
+                <input type="text" name="Duration_Song" placeholder="Ingrese en minutos" required >
             </label>
 
             <label> Fecha de lanzamiento:
@@ -45,6 +45,8 @@
                 <p>Ingrese aqui un archivo de tamaño 400x400 px tipo </p>
                 </div>
             </label>
+            
+            <input id="Send" type="submit" value="Enviar" >
 
         </form>
         </fieldset>    

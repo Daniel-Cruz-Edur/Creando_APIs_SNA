@@ -36,12 +36,22 @@ html fieldset form label
     justify-content: center;
     align-items: center;
     display: flex;
+    width: fit-content;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 html fieldset form label input
 {
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 4px;
+}
+
+html fieldset form label select
+{
+    margin-left: 4px;
 }
 
 html fieldset form h1
@@ -68,6 +78,11 @@ button
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#Send
+{
+    margin-top: 8px;
 }
 
 #H1_Registro_Song
