@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for ('static',filename='css/View_Table.css') }}">
     <title> Lista de canciones </title>
 </head>
 <body>
@@ -15,7 +16,6 @@
             <table> 
 
                 <tr>   
-                <th> Código </th>
                 <th> Titulo </th>
                 <th> Artista </th>
                 <th> Genero </th>
@@ -29,18 +29,14 @@
                 <tbody>
                     {% for Guardado_Datos_Songs in Lista_De_Canciones %}
                     <tr>
-                    <td> {{ Guardado_Datos_Songs[0] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[1] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[2] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[3] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[5] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[6] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[7] }}  </td>
-                    <td> {{ Guardado_Datos_Songs[8] }}  </td>
-                        
+                    <td> {{ Guardado_Datos_Songs.Titulo }} </td>
+                    <td> {{ Guardado_Datos_Songs.Artista }}  </td>
+                    <td> {{ Guardado_Datos_Songs.Genero }}  </td>
+                    <td> {{ Guardado_Datos_Songs.Precio }}  </td>
+                    <td> {{ Guardado_Datos_Songs.Duracion }}  </td>
+                    <td> {{ Guardado_Datos_Songs.Lanzamiento }}  </td>
+                    <td> <img src="data:image/jpeg;base64, {{ Guardado_Datos_Songs.Imagen }}" alt="No se encuebtra imagen" width="100"> </td>
 
-                    <td> <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button> 
-                        <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
                     </td>
                     </tr>   
                     {% endfor %}

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, url_for,flash, session
-import mysql.connector
+import mysql.connector, base64
 from werkzeug.security import generate_password_hash, check_password_hash
 #import bcrypt
 
@@ -43,7 +43,8 @@ def Registro():
         
         #insertar datos a la tabla personas
 
-        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona, Rol_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone, User_Rol))
+        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona, Rol_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", 
+                        (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone, User_Rol))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!')
         
@@ -150,43 +151,70 @@ def Logout():
 # 3) Eliminación
 # 4) Lista
 
-@app.route('/Registro_De_Canciones')
+@app.route('/Registro_De_Canciones', methods=['GET', 'POST'])
 def Registrando_Las_Canciones():
     
-    if request.method == 'Get':
+    if request.method == 'POST':
     
-        print("Hola acá esta creando la ruta de registro de canciones");
+        print("Hola acá esta creando la ruta de registro de canciones")
         
-        Song_Title = request.form.get('Songs_Title');
-        Artist_Name = request.form.get('Artist_Song');
-        Song_Gender = request.form.get('Gender_Song');
-        Song_Price = request.form.get('Price_Song');
-        Song_Duration = request.form.get('Duration_Song');
-        Date_Relase = request.form.get('Relase_Song');
-        Song_Cover = request.form.get('Cover_Song');
+        Song_Title = request.form.get('Songs_Title')
+        Artist_Name = request.form.get('Artist_Song')
+        Song_Gender = request.form.get('Gender_Song')
+        Song_Price = request.form.get('Price_Song')
+        Song_Duration = request.form.get('Duration_Song')
+        Date_Relase = request.form.get('Relase_Song')
+        Song_Cover = request.files['Cover_Song']
         
-        #insertar datos a la tabla personas
-        cursor.execute("Insert Into songs (Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song) Values (%s, %s, %s, %s, %s, %s, %s)", (Song_Title, Artist_Name, Song_Gender, Song_Price, Song_Duration, Date_Relase, Song_Cover));
-        db.commit();
-        flash('Cancion guardada correctamente.', 'Sucess!');
+        Transformacion_De_Imagen = Song_Cover.read()
+        
+        cursor.execute("Insert Into songs (Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song) Values (%s, %s, %s, %s, %s, %s, %s)", 
+                        (Song_Title, Artist_Name, Song_Gender, Song_Price, Song_Duration, Date_Relase, Transformacion_De_Imagen))
+        db.commit()
+        flash('Cancion guardada correctamente.', 'Sucess!')
+        
+        print(Transformacion_De_Imagen)
         
         print("Metodo POST")
         
         #redirigimos a la misma pagina cuando el metodo es POST
-        return redirect(url_for('Registrando_Las_Canciones'));
+        return redirect(url_for('Listando_Las_Canciones'))
     
     #Con get lo envio al doc
-    return render_template('Log_Songs_Page.html');
+    return render_template('Log_Songs_Page.html')
 
 @app.route('/Lista_De_Canciones')
 def Listando_Las_Canciones():
 
     cursor = db.cursor();
-    cursor.execute("SELECT * FROM songs");
-    Guardado_Datos_Songs = cursor.fetchall();
-    print("Listando las canciones. ");
+    cursor.execute("SELECT Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song FROM songs")
+    Guardado_Datos_Songs = cursor.fetchall()
     
-    return render_template('Songs_List.html', Lista_De_Canciones = Guardado_Datos_Songs);
+    print("Listando las canciones. ")
+
+    if Guardado_Datos_Songs:
+
+        List_Songs = []
+
+        for Song in Guardado_Datos_Songs:
+        
+            Image = base64.b64encode(Song[6]).decode('utf-8')
+            List_Songs.append({
+                'Titulo': Song[0],
+                'Artista': Song[1],
+                'Genero': Song[2],
+                'Precio': Song[3],
+                'Duracion': Song[4],
+                'Lanzamiento': Song[5],
+                'Imagen': Image
+            })
+        return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)    
+    
+    else:
+        
+        return print("Canciones no encontradas. ");
+    
+    #return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)
     
     
 #Aqui ejecutamos la app
