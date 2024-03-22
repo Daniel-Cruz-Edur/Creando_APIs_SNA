@@ -227,3 +227,4 @@ if __name__ == '__main__':
     app.add_url_rule('/',view_func=Lista_Registros)
     app.run(debug=True, port=5005)
     
+#att Yudy uwu
