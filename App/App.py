@@ -112,27 +112,32 @@ def Login_User():
         Password_Login = request.form.get('Users_Password'); #'User's_Password'
         
         cursor = db.cursor();
-        SQL = "SELECT Apodo_Persona, Password_Persona, Rol_Persona FROM personas_info Where Apodo_Persona = %s";
-        cursor.execute(SQL, (Username_Login))
+        cursor.execute = "SELECT Apodo_Persona, Password_Persona, Rol_Persona FROM personas_info Where Apodo_Persona = %s";
         Users = cursor.fetchone();
         
-        if Users and check_password_hash(Users['Password_Persona'], Password_Login):
+        if Users is not None and check_password_hash(Users[1], Password_Login):
 
-            session['User'] = Users['Apodo_Persona'];
-            session['Type_User'] = Users['Rol_Persona'];
+            session['User'] = Users[Username_Login];
+            session['Type_User'] = Users[2];
             
             if Users['Type_User'] == 'Administrador':
                 
                 return redirect(url_for('Lista_Registros'));
             
-            else:
+            elif Users['Type_User'] == 'Comprador':
                 
                 return redirect(url_for('Lista_De_Canciones'));
+            
+            else: 
+                
+                print("Credenciales invalidas. ");
+                flash("Credenciales invalidas, por favor revise si el suario y contraseña se escribieron de manera correcta e intentelo nuevamente. DEV CODE: INSIDE BREAK");
+                redirect(url_for('Login_User'))
         
         else:
             
             print("Las credenciales, ingresadas son invalidas. ");
-            Error = 'Credenciales invalidas. Intentelo nuevamente. ';
+            Error = 'Credenciales invalidas. Intentelo nuevamente. EROOR OUT BREAK';
             return render_template ('Login.html', Error = Error);
             
     return render_template('Login.html')
