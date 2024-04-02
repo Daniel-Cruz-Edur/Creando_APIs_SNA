@@ -40,10 +40,10 @@ def Registro():
         User_Rol = request.form.get('User_Rol')
         
         Password_Now_Encripted = generate_password_hash(Password)
-        
+        print(Password_Now_Encripted)
         #insertar datos a la tabla personas
 
-        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona, Rol_Persona) Values (%s, %s, %s, %s, %s, %s, %s)", 
+        cursor.execute("Insert Into personas_info (Nombre_Persona, Apellido_Persona, Apodo_Persona, Password_Persona, Email_Persona, Adress_Persona, Phone_Persona, Rol_Persona) Values (%s, %s, %s, %s, %s, %s, %s, %s)", 
                         (Nombres, Apellidos, Nickname, Password_Now_Encripted, E_Mail, Adress, Phone, User_Rol))
         db.commit()
         flash('Usuario creado correctamente.', 'Sucess!')
@@ -54,18 +54,6 @@ def Registro():
     
     #Con get lo envio al doc
     return render_template('registrar.html')
-
-@app.route('/Password/<Encript_Password>')
-def Encriptacion_Password(Encript_Password):
-    
-    #Generamos un has de la contraseña
-    #Encriptar = bcrypt.hashpw(Encript_Password.encode('utf-8'), bcrypt.gensalt());
-    
-    Encriptar = generate_password_hash(Encript_Password)
-    Value_Check = check_password_hash(Encriptar, Encript_Password)
-    
-    #return "Encriptado: {0} | coincide: {1}".format(Encriptar, Value_Check)
-    return Value_Check;
 
 @app.route('/Editar/<int:id>', methods = ['GET','POST'])
 def Editar_Usuario(id):
@@ -111,32 +99,31 @@ def Login_User():
         Username_Login = request.form.get('Users_Login'); #'User's_Login'
         Password_Login = request.form.get('Users_Password'); #'User's_Password'
         
-        cursor = db.cursor();
-        cursor.execute = "SELECT Apodo_Persona, Password_Persona, Rol_Persona FROM personas_info Where Apodo_Persona = %s";
-        Users = cursor.fetchone();
+        cursor = db.cursor()
+        Query = "SELECT Apodo_Persona, Password_Persona, Rol_Persona FROM personas_info WHERE Apodo_Persona = %s"
+        cursor.execute(Query, (Username_Login,))
+        Users = cursor.fetchone()
+        
+        print(Users)
+        Password_Uncripted = check_password_hash(Users[1], Password_Login) 
+        print(Password_Uncripted)
         
         if Users is not None and check_password_hash(Users[1], Password_Login):
 
-            session['User'] = Users[Username_Login];
-            session['Type_User'] = Users[2];
+            session['User'] = Username_Login
+            session['Type_User'] = Users[2]
             
-            if Users['Type_User'] == 'Administrador':
+            if Users[2] == 'Administrador':
                 
                 return redirect(url_for('Lista_Registros'));
             
-            elif Users['Type_User'] == 'Comprador':
+            else:
                 
-                return redirect(url_for('Lista_De_Canciones'));
-            
-            else: 
-                
-                print("Credenciales invalidas. ");
-                flash("Credenciales invalidas, por favor revise si el suario y contraseña se escribieron de manera correcta e intentelo nuevamente. DEV CODE: INSIDE BREAK");
-                redirect(url_for('Login_User'))
-        
+                return redirect(url_for('Listando_Las_Canciones'));
+
         else:
             
-            print("Las credenciales, ingresadas son invalidas. ");
+            print("Las credenciales ingresadas son invalidas. ");
             Error = 'Credenciales invalidas. Intentelo nuevamente. EROOR OUT BREAK';
             return render_template ('Login.html', Error = Error);
             
@@ -183,7 +170,7 @@ def Registrando_Las_Canciones():
         print("Metodo POST")
         
         #redirigimos a la misma pagina cuando el metodo es POST
-        return redirect(url_for('Listando_Las_Canciones'))
+        return redirect(url_for('Registrando_Las_Canciones'))
     
     #Con get lo envio al doc
     return render_template('Log_Songs_Page.html')
