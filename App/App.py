@@ -135,7 +135,7 @@ def Logout():
     session.pop('User', None)
     
     print("Sesión eliminada")
-    return redirect/url_for(('Login_User'))
+    return redirect(url_for('Login_User'))
 
 # Desde quí realizo las rutos pertinentes para las conciones
 # 1) Registro
@@ -207,8 +207,7 @@ def Listando_Las_Canciones():
         return print("Canciones no encontradas. ");
     
     #return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)
-    
-    
+
 #Aqui ejecutamos la app
 if __name__ == '__main__':
     app.add_url_rule('/',view_func=Lista_Registros)
