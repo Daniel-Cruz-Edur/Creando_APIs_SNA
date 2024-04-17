@@ -25,3 +25,7 @@ for(let Index=0; Index <= Numbers.length; Index++)
 {
     console.log('Elemento' + Numbers[Index]);
 }
+
+
+/* 10 5 8 20 3 15 */
+
