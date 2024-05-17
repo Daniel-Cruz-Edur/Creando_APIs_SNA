@@ -104,6 +104,11 @@ def Login_User():
         cursor.execute(Query, (Username_Login,))
         Users = cursor.fetchone()
         
+        if Users is None:
+            error = 'El usuario no está registrado.'
+            print ("El usuario no está registrado. ");
+            return render_template ('Login.html', Error=error)
+        
         print(Users)
         Password_Uncripted = check_password_hash(Users[1], Password_Login) 
         print(Password_Uncripted)
@@ -179,7 +184,7 @@ def Registrando_Las_Canciones():
 def Listando_Las_Canciones():
 
     cursor = db.cursor();
-    cursor.execute("SELECT Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song FROM songs")
+    cursor.execute("SELECT ID_Song, Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song FROM songs")
     Guardado_Datos_Songs = cursor.fetchall()
     
     print("Listando las canciones. ")
@@ -190,23 +195,60 @@ def Listando_Las_Canciones():
 
         for Song in Guardado_Datos_Songs:
         
-            Image = base64.b64encode(Song[6]).decode('utf-8')
+            Image = base64.b64encode(Song[7]).decode('utf-8')
             List_Songs.append({
-                'Titulo': Song[0],
-                'Artista': Song[1],
-                'Genero': Song[2],
-                'Precio': Song[3],
-                'Duracion': Song[4],
-                'Lanzamiento': Song[5],
+                'ID_Song': Song[0],
+                'Titulo': Song[1],
+                'Artista': Song[2],
+                'Genero': Song[3],
+                'Precio': Song[4],
+                'Duracion': Song[5],
+                'Lanzamiento': Song[6],
                 'Imagen': Image
             })
         return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)    
     
     else:
         
-        return print("Canciones no encontradas. ");
+        print("Canciones no encontradas. ");
+        return "Canciones no encontradas. "
     
     #return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)
+
+@app.route('/Editar_Canciones/<int:id>', methods = ['GET','POST'])
+def Editar_Cancion(id):
+    cursor = db.cursor()
+    if request.method == 'POST':
+        Title_Song_Modify = request.form.get('Title_Song')
+        Artist_Song_Modify = request.form.get('Artist_Song')
+        Gender_Song_Modify = request.form.get('Gender_Song')
+        Price_Song_Modify = request.form.get('Price_Song')
+        Duration_Song_Modify = request.form.get('Duration_Song')
+        Relase_Date_Song_Modify = request.form.get('Relase_Date_Song')
+        Cover_Song_Modify = request.form.get('Cover_Song')
+
+    #sentencia para actualizar los datos
+        Update_Data = "UPDATE songs set Title_Song = %s, Artist_Song_Modify = %s, Gender_Song_Modify = %s, Price_Song_Modify = %s, Durantion_Song_Modify = %s, Relase_Date_Song_Modify = %s, Cover_Song_Modify = %s Where ID_Song = %s"
+        cursor.execute(Update_Data,(Title_Song_Modify, Artist_Song_Modify, Gender_Song_Modify, Price_Song_Modify, Duration_Song_Modify, Relase_Date_Song_Modify, Cover_Song_Modify,id))
+        db.commit()
+
+        return redirect(url_for('Listando_Las_Canciones'))
+    else:
+        #obtener los datos de la persona que va a editar
+        cursor = db.cursor()
+        cursor.execute('SELECT * FROM songs WHERE ID_Song = %s', (id,))
+        data = cursor.fetchall()
+
+        return render_template('Editar_Songs.html', songs = data[0]) #Este personas corresponde al schema
+
+@app.route('/Eliminar_Canciones/<int:id>', methods=['GET'])
+def Eliminar_Cancion(id):
+    
+    cursor = db.cursor();
+    cursor.execute('DELETE FROM Songs WHERE ID_Song = %s', (id,))
+    db.commit()
+    return redirect(url_for('Listando_Las_Canciones'))
+
 
 #Aqui ejecutamos la app
 if __name__ == '__main__':

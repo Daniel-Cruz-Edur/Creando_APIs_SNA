@@ -38,6 +38,10 @@
                     <td> <img src="data:image/jpeg;base64, {{ Guardado_Datos_Songs.Imagen }}" alt="No se encuebtra imagen" width="100"> </td>
 
                     </td>
+
+                    <td> <button> <a href="{{ url_for ('Editar_Cancion', id = Guardado_Datos_Songs.ID_Song )}}"> Editar </a> </button> 
+                        <button> <a href="{{ url_for ('Eliminar_Cancion', id = Guardado_Datos_Songs.ID_Song )}}"> Eliminar </a> </button>
+                    </td>
                     </tr>   
                     {% endfor %}
                 </tbody>

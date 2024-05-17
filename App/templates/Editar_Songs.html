@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/Login_Page.css')}}">
+</head>
+<body>
+    <main>
+    <fieldset>
+        <h1 style="text-align: center;">Editar Personas</h1>
+    <form method="POST" action="">
+        <label> Codigo: 
+        <input type="number" name="ID_Song" value="{{ songs[0] }}" disabled><br>
+        </label>
+        <label> Nombre de la canción: 
+        <input type="text" name="Title_Song" value="{{ songs[1] }}" required><br>
+        </label>
+        <label> Artista de la canción: 
+        <input type="text" name="Artist_Song" value="{{ songs[2] }}" required><br>
+        </label>
+        <label> Genero de la canción:
+        <input type="text" name="Gender_Song" value="{{ songs[3] }}" required><br>
+        </label>
+        <label> Precio de la canción:
+        <input type="text" name="Price_Song" value="{{ songs[4] }}" required><br>
+        </label>
+        <label> Duración de la canción:
+        <input type="text" name="Duration_Song" value="{{ songs[5] }}" required><br>
+        </label>
+        <label> Fecha de lanzamiento: 
+        <input type="date" name="Relase_Date_Song" value="{{ songs[6] }}" required><br>
+        </label>
+        <label id="Label_Cover"> Portada de la canción:
+            <div id="Portada_Song">
+            <input type="file" name="Cover_Song" required >
+            <p>Ingrese aqui un archivo de tamaño 400x400 px tipo </p>
+            </div>
+        </label>
+
+        <input type="submit" value="Guardar Cambios">
+    </form>
+    </fieldset>
+    </main>
+
+</body>
+</html>
