@@ -9,6 +9,10 @@
     </head>
     
     <body>
+        <header>
+            <a href=" {{url_for('Lista_Registros')}} "><button> Listado de usuarios </button></a>
+            <a href=" {{url_for('Listando_Las_Canciones')}} "><button> Listado de canciones </button></a>
+        </header>
         <main>
         <fieldset>
         <form action="/Registrar" method="post">

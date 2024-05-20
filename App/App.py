@@ -165,7 +165,7 @@ def Registrando_Las_Canciones():
         
         Transformacion_De_Imagen = Song_Cover.read()
         
-        cursor.execute("Insert Into songs (Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song) Values (%s, %s, %s, %s, %s, %s, %s)", 
+        cursor.execute("Insert Into songs (Title_Song, Artist_Song, Gender_Song, Price_Song, Duration_Song, Relase_Date_Song, Cover_Song) Values (%s, %s, %s, %s, %s, %s, %s)", 
                         (Song_Title, Artist_Name, Song_Gender, Song_Price, Song_Duration, Date_Relase, Transformacion_De_Imagen))
         db.commit()
         flash('Cancion guardada correctamente.', 'Sucess!')
@@ -184,7 +184,7 @@ def Registrando_Las_Canciones():
 def Listando_Las_Canciones():
 
     cursor = db.cursor();
-    cursor.execute("SELECT ID_Song, Title_Song, Artist_Song, Gender_Song, Price_Song, Durantion_Song, Relase_Date_Song, Cover_Song FROM songs")
+    cursor.execute("SELECT ID_Song, Title_Song, Artist_Song, Gender_Song, Price_Song, Duration_Song, Relase_Date_Song, Cover_Song FROM songs")
     Guardado_Datos_Songs = cursor.fetchall()
     
     print("Listando las canciones. ")
@@ -210,8 +210,8 @@ def Listando_Las_Canciones():
     
     else:
         
-        print("Canciones no encontradas. ");
-        return "Canciones no encontradas. "
+        print("Canciones no registradas. ");
+        return "Canciones no registradas. "
     
     #return render_template('Songs_List.html', Lista_De_Canciones = List_Songs)
 
@@ -225,11 +225,13 @@ def Editar_Cancion(id):
         Price_Song_Modify = request.form.get('Price_Song')
         Duration_Song_Modify = request.form.get('Duration_Song')
         Relase_Date_Song_Modify = request.form.get('Relase_Date_Song')
-        Cover_Song_Modify = request.form.get('Cover_Song')
+        Cover_Song_Modify = request.files['Cover_Song_Update']
+
+        Transformacion_De_Imagen = Cover_Song_Modify.read()
 
     #sentencia para actualizar los datos
-        Update_Data = "UPDATE songs set Title_Song = %s, Artist_Song_Modify = %s, Gender_Song_Modify = %s, Price_Song_Modify = %s, Durantion_Song_Modify = %s, Relase_Date_Song_Modify = %s, Cover_Song_Modify = %s Where ID_Song = %s"
-        cursor.execute(Update_Data,(Title_Song_Modify, Artist_Song_Modify, Gender_Song_Modify, Price_Song_Modify, Duration_Song_Modify, Relase_Date_Song_Modify, Cover_Song_Modify,id))
+        Update_Data = "UPDATE songs set Title_Song = %s, Artist_Song = %s, Gender_Song = %s, Price_Song = %s, Duration_Song = %s, Relase_Date_Song = %s, Cover_Song = %s Where ID_Song = %s"
+        cursor.execute(Update_Data,(Title_Song_Modify, Artist_Song_Modify, Gender_Song_Modify, Price_Song_Modify, Duration_Song_Modify, Relase_Date_Song_Modify, Transformacion_De_Imagen,id))
         db.commit()
 
         return redirect(url_for('Listando_Las_Canciones'))

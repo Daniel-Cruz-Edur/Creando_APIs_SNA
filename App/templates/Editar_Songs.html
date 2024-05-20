@@ -8,8 +8,8 @@
 <body>
     <main>
     <fieldset>
-        <h1 style="text-align: center;">Editar Personas</h1>
-    <form method="POST" action="">
+        <h1 style="text-align: center;">Editar Canciones</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
         <label> Codigo: 
         <input type="number" name="ID_Song" value="{{ songs[0] }}" disabled><br>
         </label>
@@ -33,7 +33,7 @@
         </label>
         <label id="Label_Cover"> Portada de la canción:
             <div id="Portada_Song">
-            <input type="file" name="Cover_Song" required >
+            <input type="file" name="Cover_Song_Update" required >
             <p>Ingrese aqui un archivo de tamaño 400x400 px tipo </p>
             </div>
         </label>

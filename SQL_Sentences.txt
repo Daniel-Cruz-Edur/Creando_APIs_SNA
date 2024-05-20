@@ -1,0 +1,24 @@
+CREATE SCHEMA `usuarios` ;
+
+CREATE TABLE `usuarios`.`personas_info` (
+  `ID_Persona` INT NOT NULL AUTO_INCREMENT,
+  `Nombre_Persona` VARCHAR(45) NOT NULL,
+  `Apellido_Persona` VARCHAR(45) NOT NULL,
+  `Apodo_Persona` VARCHAR(45) NOT NULL,
+  `Password_Persona` VARCHAR(255) NOT NULL,
+  `Email_Persona` VARCHAR(45) NOT NULL,
+  `Adress_Persona` VARCHAR(45) NOT NULL,
+  `Phone_Persona` VARCHAR(45) NOT NULL,
+  `Rol_Persona` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`ID_Persona`));
+
+CREATE TABLE `usuarios`.`songs` (
+  `ID_Song` INT NOT NULL AUTO_INCREMENT,
+  `Title_Song` VARCHAR(45) NOT NULL,
+  `Artist_Song` VARCHAR(45) NOT NULL,
+  `Gender_Song` VARCHAR(45) NOT NULL,
+  `Price_Song` DECIMAL NOT NULL,
+  `Duration_Song` VARCHAR(45) NOT NULL,
+  `Relase_Date_Song` DATE NOT NULL,
+  `Cover_Song` BLOB NOT NULL,
+  PRIMARY KEY (`ID_Song`));

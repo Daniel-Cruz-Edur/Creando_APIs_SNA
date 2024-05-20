@@ -6,12 +6,18 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/View_Table.css')}}">
 </head>
 <body>
-	<main>
-    
-    <h1> Bienvenido  {{ session['usuario'] }} </h1>
-    <p> Has iniciado sesion correctamente </p>
-    <h1> Personas Registradas </h1>
+    <header>
+    {% if 'User' in session and session['Type_User'] == 'Administrador' %}
+        <h1>Bienvenido Administrador: {{ session['User'] }}</h1>
+        <p> Has iniciado sesion correctamente </p>
+        <a href=" {{url_for('Listando_Las_Canciones')}} "><button> Listado de canciones </button></a>
+        <a href=" {{url_for('Registrando_Las_Canciones')}} "><button> Registro de canciones </button></a>
+        <a href=" {{url_for('Registro')}} "><button> Registro de usuarios </button></a>
         <a href="/Logout"> Cerrar sesión </a>
+    {% endif %}
+    </header>
+	<main>
+    <h1> Personas Registradas </h1>
     <table> 
         
         <tr>   

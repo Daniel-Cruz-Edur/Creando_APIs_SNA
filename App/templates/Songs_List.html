@@ -8,9 +8,23 @@
 </head>
 <body>
     <header>
+        {% if 'User' in session and session['Type_User'] == 'Comprador' %}
+            <h1>Bienvenido Usuario: {{ session['User'] }}</h1>
+            <a href="/Logout"> Cerrar sesión </a>
+        {% endif %}
+
+        {% if 'User' in session and session['Type_User'] == 'Administrador' %}
+            <h1>Bienvenido Administrador: {{ session['User'] }}</h1>
+            <p> Has iniciado sesion correctamente </p>
+            <a href=" {{url_for('Lista_Registros')}} "><button> Listado de usuarios </button></a>
+            <a href=" {{url_for('Registrando_Las_Canciones')}} "><button> Registro de canciones </button></a>
+            <a href=" {{url_for('Registro')}} "><button> Registro de usuarios </button></a>
+            <a href="/Logout"> Cerrar sesión </a>
+        {% endif %}
 
     </header>
     <main>
+        <h1> Listado de canciones </h1>
         <article> 
         
             <table> 
@@ -35,12 +49,17 @@
                     <td> {{ Guardado_Datos_Songs.Precio }}  </td>
                     <td> {{ Guardado_Datos_Songs.Duracion }}  </td>
                     <td> {{ Guardado_Datos_Songs.Lanzamiento }}  </td>
-                    <td> <img src="data:image/jpeg;base64, {{ Guardado_Datos_Songs.Imagen }}" alt="No se encuebtra imagen" width="100"> </td>
-
+                    <td> 
+                        <img src="data:image/jpeg;base64, {{ Guardado_Datos_Songs.Imagen }}" alt="No se encuentra imagen" width="100"> </td>
                     </td>
 
-                    <td> <button> <a href="{{ url_for ('Editar_Cancion', id = Guardado_Datos_Songs.ID_Song )}}"> Editar </a> </button> 
-                        <button> <a href="{{ url_for ('Eliminar_Cancion', id = Guardado_Datos_Songs.ID_Song )}}"> Eliminar </a> </button>
+                    <td> 
+                        {% if 'User' in session and session['Type_User'] == 'Comprador' %}
+                            <button> <a>  </a> Add to Shopping Cart </button>
+                        {% else %}
+                            <button><a href="{{ url_for('Editar_Cancion', id = Guardado_Datos_Songs.ID_Song) }}">Editar</a></button>
+                            <button><a href="{{ url_for('Eliminar_Cancion', id = Guardado_Datos_Songs.ID_Song) }}">Eliminar</a></button>
+                        {% endif %}
                     </td>
                     </tr>   
                     {% endfor %}
