@@ -55,7 +55,10 @@
 
                     <td> 
                         {% if 'User' in session and session['Type_User'] == 'Comprador' %}
-                            <button> <a>  </a> Add to Shopping Cart </button>
+                            <button class="add-to-cart" data-id=" {{ Guardado_Datos_Songs.ID_Song }} "
+                                                        data-title=" {{ Guardado_Datos_Songs.Titulo }} "
+                                                        data-price=" {{ Guardado_Datos_Songs.Precio }} "
+                            > Add to Shopping Cart </button>
                         {% else %}
                             <button><a href="{{ url_for('Editar_Cancion', id = Guardado_Datos_Songs.ID_Song) }}">Editar</a></button>
                             <button><a href="{{ url_for('Eliminar_Cancion', id = Guardado_Datos_Songs.ID_Song) }}">Eliminar</a></button>
@@ -68,5 +71,7 @@
             </table>
         </article>
     </main>
+    <script src=" https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+    <script src=" {{ url_for ('static',filename='js/Carrito.js') }} "></script>
 </body>
 </html>

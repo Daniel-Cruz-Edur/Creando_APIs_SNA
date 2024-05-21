@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for,flash, session
+from flask import Flask, render_template, redirect, request, url_for,flash, session,jsonify, send_file
 import mysql.connector, base64
 from werkzeug.security import generate_password_hash, check_password_hash
 #import bcrypt
@@ -16,7 +16,7 @@ db = mysql.connector.connect(
 cursor =  db.cursor()
 
 #Definir rutas
-@app.route('/')
+@app.route('/Lista_De_Personas')
 def Lista_Registros():
     
     cursor = db.cursor();
@@ -90,7 +90,7 @@ def Eliminar_Usuario(id):
     return redirect(url_for('Lista_Registros'))
 
     
-@app.route('/Login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def Login_User():
     
     if request.method == 'POST':
@@ -250,6 +250,34 @@ def Eliminar_Cancion(id):
     cursor.execute('DELETE FROM Songs WHERE ID_Song = %s', (id,))
     db.commit()
     return redirect(url_for('Listando_Las_Canciones'))
+
+@app.route('/Agregar_Al_Carrito', methods = ['POST'])
+def Add_To_Cart():
+    
+    print('Oh, estás en el carrito. ')
+    
+    
+    ID_Song_Py= request.form['ID_Song_LA']
+    Title_Song_Py = request.form['Titulo_Song_LA']
+    Price_Song_Py = request.form['Precio_Song_LA']
+
+    if 'Cart' not in session:
+        session['Cart'] = []
+        
+    session['Cart'].append({'Id_Song':ID_Song_Py, 'Titulo_Song': Title_Song_Py, 'Precio_Song': float (Price_Song_Py)})
+    session.modified = True
+    
+    # print ('Contenido del carro es:' + session['Cart'])
+    
+    return jsonify({'message': 'Canción agregada correctamente al carrito. '})
+    
+@app.route('/Mostrar_El_Carrito', methods = ['POST'])
+def Show_Cart():
+    
+    carro = session.get('Cart',[])
+    total = sum(item['Precio_Song'] for item in carro)    
+    print ('Hello World...');
+    return render_template('Carrito.html', carro=carro, total=total)
 
 
 #Aqui ejecutamos la app
