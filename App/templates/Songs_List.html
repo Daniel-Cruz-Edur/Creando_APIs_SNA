@@ -10,7 +10,8 @@
     <header>
         {% if 'User' in session and session['Type_User'] == 'Comprador' %}
             <h1>Bienvenido Usuario: {{ session['User'] }}</h1>
-            <a href="/Logout"> Cerrar sesión </a>
+            <a href="/Logout"> <button> Cerrar Sesión </button> </a> </li>
+            <a href="/Mostrar_El_Carrito"> <button> Ir al carrito </button> </a> </li>
         {% endif %}
 
         {% if 'User' in session and session['Type_User'] == 'Administrador' %}

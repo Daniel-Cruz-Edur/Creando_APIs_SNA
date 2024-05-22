@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Carrito de Compras </title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/bootstrap.min.css') }} "> 
 </head>
 <body>
     <header>
-        <ul>
-            <li> <a href=""> Carrito </a> </li>
-            <li> <a href="/Logout"> Cerrar Sesión </a> </li>
-        </ul>
+        <nav class="navbar-nav bg-dark border-bottom border-body navbar navbar-expand{-sm|-md|-lg|-xl|-xxl}" data-bs-theme="dark">
+            <ul>
+                <li class="nav-item"> <a href="/Logout"> <button> Cerrar Sesión </button> </a> </li>
+                <li class="nav-item"> <a href="/Lista_De_Canciones"> <button> Ir a la lista de canciones </button> </a> </li>
+            </ul>
+        </nav>
     </header>
     <main>
 
-        <h1> Carrito de Compras </h1>
+        <h1 class="text-center h1 text-success display-3 fw-bold"> Carrito de Compras </h1>
         <section id="container">
             
             {% for item in carro %}
 
-            <section class="cart-item"> 
-                <h2> {{ item.titulo }} </h2>
-                <p> Precio: {{ item.precio }}</p>
-            </section>
+            <ul class="list-group"> 
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <h2 class="fw-bold"> {{ item.Titulo_Song }} </h2>
+                    <h5> Precio: ${{ item.Precio_Song }}</h5>
+                </li>
+            </ul>
 
             {% endfor %}
 
-            <h3> Total: $ {{ total }} </h3>
+            <h3 class="text-center text-secondary display-5"> Total: $ {{ total }} </h3>
 
         </section>
 
 
     </main>
+    <script src=" {{ url_for('static', filename='js/bootstrap.min.js') }} "></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-alert('Hola');
 $(document).ready(function(){
 
     $('.add-to-cart').on('click', function(){
@@ -20,5 +19,3 @@ $(document).ready(function(){
     });
 
 });
-
-alert('Adios');

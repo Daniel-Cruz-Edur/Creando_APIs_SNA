@@ -1,6 +1,8 @@
-CREATE SCHEMA `usuarios` ;
+CREATE SCHEMA `usuarios` DEFAULT CHARACTER SET utf16 COLLATE utf16_spanish_ci ;
+USE `usuarios` ;
 
-CREATE TABLE `usuarios`.`personas_info` (
+CREATE TABLE `usuarios`.`personas_info`
+(
   `ID_Persona` INT NOT NULL AUTO_INCREMENT,
   `Nombre_Persona` VARCHAR(45) NOT NULL,
   `Apellido_Persona` VARCHAR(45) NOT NULL,
@@ -9,8 +11,9 @@ CREATE TABLE `usuarios`.`personas_info` (
   `Email_Persona` VARCHAR(45) NOT NULL,
   `Adress_Persona` VARCHAR(45) NOT NULL,
   `Phone_Persona` VARCHAR(45) NOT NULL,
-  `Rol_Persona` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`ID_Persona`));
+  `Rol_Persona` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`ID_Persona`)
+);
 
 CREATE TABLE `usuarios`.`songs` (
   `ID_Song` INT NOT NULL AUTO_INCREMENT,
@@ -22,3 +25,38 @@ CREATE TABLE `usuarios`.`songs` (
   `Relase_Date_Song` DATE NOT NULL,
   `Cover_Song` BLOB NOT NULL,
   PRIMARY KEY (`ID_Song`));
+
+CREATE TABLE `usuarios`.`purchases` (
+  `ID_Purchase` INT NOT NULL AUTO_INCREMENT,
+  `Date_Purchase` DATE NOT NULL,
+  `Price_Purchase` DECIMAL NOT NULL,
+  `Payment_Method_Purchase` VARCHAR(45) NOT NULL,
+  `ID_Song` INT NOT NULL,
+  `ID_Person` INT NOT NULL,
+  PRIMARY KEY (`ID_Purchase`));
+  
+  ALTER TABLE `usuarios`.`purchases` 
+ADD INDEX `Purchases_Songs_idx` (`ID_Song` ASC),
+ADD INDEX `Purchases_Persons_idx` (`ID_Person` ASC);
+
+ALTER TABLE `usuarios`.`purchases` 
+ADD CONSTRAINT `Purchases_Songs`
+  FOREIGN KEY (`ID_Song`)
+  REFERENCES `usuarios`.`songs` (`ID_Song`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `Purchases_Persons`
+  FOREIGN KEY (`ID_Person`)
+  REFERENCES `usuarios`.`personas_info` (`ID_Persona`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+Select *
+From personas_info;
+
+SELECT *
+FROM songs;
+
+SELECT * 
+FROM purchases;

@@ -14,6 +14,9 @@
         <a href=" {{url_for('Registrando_Las_Canciones')}} "><button> Registro de canciones </button></a>
         <a href=" {{url_for('Registro')}} "><button> Registro de usuarios </button></a>
         <a href="/Logout"> Cerrar sesión </a>
+    {% else %}
+        <h2> MMMM, no has iniciado sesión correctamente así que por seguridad no se mostraran los datos completos, inicia sesión de nuevo para verlos correctamente. :) </h2>
+        <a href="/"><button> Ir al Login </button></a>
     {% endif %}
     </header>
 	<main>
@@ -34,16 +37,19 @@
         <tbody>
             {% for Guardado_Datos_Personas in Mi_Base_De_Datos %}
             <tr>
-            <td> {{ Guardado_Datos_Personas[0] }}  </td>
-            <td> {{ Guardado_Datos_Personas[1] }}  </td>
-            <td> {{ Guardado_Datos_Personas[2] }}  </td>
-            <td> {{ Guardado_Datos_Personas[3] }}  </td>
-            <td> {{ Guardado_Datos_Personas[5] }}  </td>
-            <td> {{ Guardado_Datos_Personas[6] }}  </td>
-            <td> {{ Guardado_Datos_Personas[7] }}  </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[0] }} {% endif %} </td>
+            <td> {{ Guardado_Datos_Personas[1] }} </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[2] }} {% endif %} </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[3] }} {% endif %} </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[5] }} {% endif %} </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[6] }} {% endif %} </td>
+            <td> {% if 'User' in session and session['Type_User'] == 'Administrador' %} {{ Guardado_Datos_Personas[7] }} {% endif %} </td>
                 
-            <td> <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button> 
+            <td> 
+                {% if 'User' in session and session['Type_User'] == 'Administrador' %}
+                <button> <a href="{{ url_for ('Editar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Editar </a> </button> 
                 <button> <a href="{{ url_for ('Eliminar_Usuario', id = Guardado_Datos_Personas[0] )}}"> Eliminar </a> </button>
+                {% endif %}
             </td>
             </tr>   
             {% endfor %}

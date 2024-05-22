@@ -271,7 +271,7 @@ def Add_To_Cart():
     
     return jsonify({'message': 'Canción agregada correctamente al carrito. '})
     
-@app.route('/Mostrar_El_Carrito', methods = ['POST'])
+@app.route('/Mostrar_El_Carrito', methods = ['GET','POST'])
 def Show_Cart():
     
     carro = session.get('Cart',[])
