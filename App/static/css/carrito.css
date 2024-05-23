@@ -1,0 +1,25 @@
+*
+{
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.eliminar_boton
+{
+    margin-top: 30px;
+    margin-bottom: auto;
+    justify-content: center;
+}
+
+.total_vaciar_section
+{
+    margin-top: 15px;
+}
+
+.total_vaciar_section button
+{
+    margin-left: 45%;
+}

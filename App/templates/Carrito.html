@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Carrito de Compras </title>
     <link rel="stylesheet" href=" {{ url_for('static', filename='css/bootstrap.min.css') }} "> 
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/carrito.css') }} "> 
 </head>
 <body>
     <header>
@@ -24,22 +25,32 @@
 
             <ul class="list-group"> 
                 <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="col-3">
-                    <div class="row"> <h2 class="fw-bold"> {{ item.Titulo_Song }} </h2> </div>
-                    <div class="col-3"> <h5> Precio: ${{ item.Precio_Song }}</h5> </div>
-                    <div class="col-3"> <button> Eliminar </button> </div>
-                </div>
+                    <div class="container row">
+                        <div class="col-11 col-sm-6 col-lg-10">
+                            <h2 class="fw-bold"> {{ item.Titulo_Song }} </h2> 
+                            <h5> Precio: ${{ item.Precio_Song }}</h5> 
+                        </div>
+                        <div class="col-1 position-absolute end-0 col-sm-3 col-lg-2">
+                            <a href="/Borrar_Item_Carrito"><button class="btn btn-danger eliminar_boton delete-item-cart"> Eliminar </button></a>
+                        </div>
+                    </div> 
                 </li>
             </ul>
 
             {% endfor %}
 
-            <h3 class="text-center text-secondary display-5"> Total: $ {{ total }} </h3>
+            <section class="container d-flex total_vaciar_section">
+                <h3 class="text-center text-secondary display-5"> Total: $ {{ total }} </h3>
+                {% if 'User' in session and session['Cart'] != []  %}
+                    <a href="/Borrar_El_Carrito"><button class="btn btn-danger delete-cart"> Vaciar Carrito </button> </a>
+                {% endif %}
+            </section>
 
         </section>
 
 
     </main>
     <script src=" {{ url_for('static', filename='js/bootstrap.min.js') }} "></script>
+    <script src=" {{ url_for('static', filename='js/') }} "></script>
 </body>
 </html>

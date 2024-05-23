@@ -267,7 +267,7 @@ def Add_To_Cart():
     session['Cart'].append({'Id_Song':ID_Song_Py, 'Titulo_Song': Title_Song_Py, 'Precio_Song': float (Price_Song_Py)})
     session.modified = True
     
-    # print ('Contenido del carro es:' + session['Cart'])
+    #print ('Contenido del carro es:' + session['Cart'])
     
     return jsonify({'message': 'Canción agregada correctamente al carrito. '})
     
@@ -279,7 +279,16 @@ def Show_Cart():
     print ('Hello World...');
     return render_template('Carrito.html', carro=carro, total=total)
 
+@app.route('/Borrar_El_Carrito', methods=['GET','POST'])
+def Delete_Cart():
+    
+    session['Cart'] = []
+    session.modified = True
+    
+@app.route('/Borrar_Item_Carrito', methods=['GET','POST'])
+def Delete_Item_Cart():
 
+    return redirect(url_for('Show_Cart'))
 #Aqui ejecutamos la app
 if __name__ == '__main__':
     app.add_url_rule('/',view_func=Lista_Registros)
