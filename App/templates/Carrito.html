@@ -3,54 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Carrito de Compras </title>
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/bootstrap.min.css') }} "> 
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/carrito.css') }} "> 
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
 </head>
 <body>
     <header>
-        <nav class="navbar-nav bg-dark border-bottom border-body navbar-expand{-sm|-md|-lg|-xl|-xxl}" data-bs-theme="dark">
+        <nav class="navbar-nav bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark">
             <ul class="nav">
-                <li class="nav-item --bs-light-bg-subtle"> <a href="/Logout"> <button> Cerrar Sesión </button> </a> </li>
-                <li class="nav-item --bs-light-bg-subtle"> <a href="/Lista_De_Canciones"> <button> Ir a la lista de canciones </button> </a> </li>
+                <li class="nav-item --bs-light-bg-subtle"><a href="/Logout"><button>Cerrar Sesión</button></a></li>
+                <li class="nav-item --bs-light-bg-subtle"><a href="/Lista_De_Canciones"><button>Ir a la lista de canciones</button></a></li>
             </ul>
         </nav>
     </header>
     <main>
-
-        <h1 class="text-center h1 text-success display-3 fw-bold"> Carrito de Compras </h1>
+        <h1 class="text-center h1 text-success display-3 fw-bold">Carrito de Compras</h1>
         <section id="container">
-            
             {% for item in carro %}
-
-            <ul class="list-group"> 
+            <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="container row">
                         <div class="col-11 col-sm-6 col-lg-10">
-                            <h2 class="fw-bold"> {{ item.Titulo_Song }} </h2> 
-                            <h5> Precio: ${{ item.Precio_Song }}</h5> 
+                            <h2 class="fw-bold">{{ item.Titulo_Song }}</h2>
+                            <h5>Precio: ${{ item.Precio_Song }}</h5>
                         </div>
                         <div class="col-1 position-absolute end-0 col-sm-3 col-lg-2">
-                            <a href="/Borrar_Item_Carrito"><button class="btn btn-danger eliminar_boton delete-item-cart"> Eliminar </button></a>
+                            <button class="btn btn-danger eliminar_boton delete-item-cart" data-id="{{ item.Id_Song }}">Eliminar</button>
                         </div>
-                    </div> 
+                    </div>
                 </li>
             </ul>
-
             {% endfor %}
-
             <section class="container d-flex total_vaciar_section">
-                <h3 class="text-center text-secondary display-5"> Total: $ {{ total }} </h3>
-                {% if 'User' in session and session['Cart'] != []  %}
-                    <a href="/Borrar_El_Carrito"><button class="btn btn-danger delete-cart"> Vaciar Carrito </button> </a>
+                <h3 class="text-center text-secondary display-5">Total: ${{ total }}</h3>
+                {% if 'User' in session and session['Cart'] != [] %}
+                    <a href="/Borrar_El_Carrito"><button class="btn btn-danger delete-cart">Vaciar Carrito</button></a>
                 {% endif %}
             </section>
-
         </section>
-
-
     </main>
-    <script src=" {{ url_for('static', filename='js/bootstrap.min.js') }} "></script>
-    <script src=" {{ url_for('static', filename='js/') }} "></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/Delete_item.js') }}"></script>
 </body>
 </html>

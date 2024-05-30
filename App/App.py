@@ -284,11 +284,25 @@ def Delete_Cart():
     
     session['Cart'] = []
     session.modified = True
-    
-@app.route('/Borrar_Item_Carrito', methods=['GET','POST'])
-def Delete_Item_Cart():
 
-    return redirect(url_for('Show_Cart'))
+    return render_template('Carrito.html')
+    
+@app.route('/Borrar_Item_Carrito', methods=['POST'])
+def Delete_Item_Cart():
+    # Retrieve the current user's cart from the session
+    carro = session.get('Cart', [])
+
+    # Get the ID of the song to delete from the request data
+    ID_Song_Py = request.form['ID_Song_DEL']
+
+    # Filter out the song to be deleted
+    cart2 = [item for item in carro if item['Id_Song'] != ID_Song_Py]
+
+    # Update the cart in the session
+    session['Cart'] = cart2
+
+    return jsonify(success=True), 200
+
 #Aqui ejecutamos la app
 if __name__ == '__main__':
     app.add_url_rule('/',view_func=Lista_Registros)
